@@ -18,21 +18,28 @@ public static class Global
     public static int Health = 0;
     public static int FrameCount = 0;
 
-    public static void RecycleEn(GameObject go)
+    public static void Recycle(GameObject go)
     {
         switch (go.name)
         {
             case "ShipUp":
+                Score++;
                 ShipsUp.Enqueue(go);
                 break;
             case "ShipDown":
+                Score++;
                 ShipsDown.Enqueue(go);
                 break;
             case "MissilesUp":
+                Score++;
                 MissilesUp.Enqueue(go);
                 break;
             case "MissilesDown":
+                Score++;
                 MissilesDown.Enqueue(go);
+                break;
+            case "Bullets":
+                Bullets.Enqueue(go);
                 break;
         }
     }

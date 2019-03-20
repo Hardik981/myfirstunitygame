@@ -74,22 +74,34 @@ public class Enemy : MonoBehaviour {
             {
                 Global.Score++;
                 GameObject gameObject1;
-                (gameObject1 = gameObject).SetActive(false);       //Disable Enemy when Collide with Enemy
-                Global.RecycleEn(gameObject1);   //Store Enemy in Queue
                 GameObject o;
-                (o = other.gameObject).SetActive(false);       //Disable Bullet when Collide with Enemy
-                Global.Bullets.Enqueue(o);   //Store Bullet in Queue
+                (gameObject1 = gameObject).SetActive(false);    
+                Global.Recycle(gameObject1);  
+                (o = other.gameObject).SetActive(false);       
+                Global.Recycle(o);   
                 break;
             }
-            //Recycle Enemy and decrease health of player
+            
             case "Player":
             {
-                Global.Score++;
                 Global.Health++;
                 GameObject o;
                 (o = gameObject).SetActive(false);
-                Global.RecycleEn(o);
+                Global.Recycle(o);
                 break;
+            }
+        }
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (gameObject.name != other.gameObject.name)
+            {
+                GameObject gameObject1;
+                GameObject o;
+                (gameObject1 = gameObject).SetActive(false);
+                Global.Recycle(gameObject1);
+                (o = other.gameObject).SetActive(false);
+                Global.Recycle(o);
             }
         }
     }
@@ -108,7 +120,7 @@ public class Enemy : MonoBehaviour {
             {
                 GameObject o;
                 (o = gameObject).SetActive(false);
-                Global.RecycleEn(o);
+                Global.Recycle(o);
             }
         }
     }

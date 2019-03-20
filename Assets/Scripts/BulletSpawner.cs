@@ -152,30 +152,4 @@ public class BulletSpawner : MonoBehaviour
             yield return new WaitForSeconds(0.001f);
         }
     }
-
-    /*private void CreateBul()
-    {
-        if (Global.Bullets.Count == 0)  //Create new Bullet
-        {
-            if (_bullet)
-            {
-                var goT = gameObject.transform;
-                var bul = Instantiate(_bullet, goT.position, goT.rotation, goT);
-                bul.gameObject.name = gameObject.name == "BulletPos" ? "Bullet" : "EnemyBullet";
-            }
-        }
-        else     //Reuse Bullet
-        {
-            var bulPoll = Global.Bullets.Dequeue();
-            if (_isGameObjectNotNull)
-            {
-                var go = gameObject;
-                bulPoll.gameObject.name = go.name == "BulletPos" ? "Bullet" : "EnemyBullet";
-                bulPoll.transform.position = go.transform.position;
-                bulPoll.transform.rotation = go.transform.rotation;
-                bulPoll.transform.parent = go.transform;
-                bulPoll.SetActive(true);
-            }
-        }
-    }*/
 }

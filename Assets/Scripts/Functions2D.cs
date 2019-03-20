@@ -7,7 +7,7 @@ public class Functions2D : MonoBehaviour
     private Camera cam;
 
     public static void FollowOtherInRotate(Transform main, Transform other)
-    {
+    {  
         var direction = new Vector3();
         if (main)
         {

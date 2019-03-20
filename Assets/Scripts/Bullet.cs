@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour {
         transform1.parent = null;
         Functions2D.RelativeTransform(transform1,"scale",XSize,YSize);
     }
-    
+
     private void FixedUpdate()
     {
         BulVelF();                           //Apply Velocity to Bullet
@@ -58,38 +58,26 @@ public class Bullet : MonoBehaviour {
     {
         if (gameObject.name == "EnemyBullet")
         {
-            if (other.gameObject.name == "Bullet")
+            switch (other.gameObject.name)
             {
-                GameObject go;
-                (go = gameObject).SetActive(false);        //Disable EnemyBullet
-                Global.Bullets.Enqueue(go);
-                GameObject o;
-                (o = other.gameObject).SetActive(false);    //Disable Player Bullet
-                Global.Bullets.Enqueue(o);
-            }
-
-            else if (other.gameObject.CompareTag("Enemy"))
-            {
-                if (other.gameObject.transform.childCount != 0)
-                    if (other.gameObject.transform.GetChild(0) != gameObject.transform.parent)
-                    {
-                        // && -> if Enemy Bullets collide with other enemy then enBullet gets disabled
-                        Global.Score++;
-                        GameObject gameObject1;
-                        (gameObject1 = gameObject).SetActive(false);
-                        Global.Bullets.Enqueue(gameObject1);
-                        GameObject o;
-                        (o = other.gameObject).SetActive(false);
-                        Global.RecycleEn(o);
-                    }
-            }
-
-            else if (other.gameObject.name == "Player")
-            {
-                Global.Health++;
-                GameObject o;
-                (o = gameObject).SetActive(false);
-                Global.Bullets.Enqueue(o);
+                case "Bullet":
+                {
+                    GameObject go;
+                    GameObject o;
+                    (go = gameObject).SetActive(false);
+                    Global.Recycle(go);
+                    (o = other.gameObject).SetActive(false);
+                    Global.Recycle(o);
+                    break;
+                }
+                case "Player":
+                {
+                    Global.Health++;
+                    GameObject o;
+                    (o = gameObject).SetActive(false);
+                    Global.Recycle(o);
+                    break;
+                }
             }
         }
     }

@@ -9,7 +9,6 @@ public class Scale : MonoBehaviour
     private void Awake()
     {
         yAxis = GlobalS.Size.y;
-        Debug.Log("Important "+yAxis);
         if (Debug.isDebugBuild)
         {
             Debug.Log("Camera X Axis Size: " + GlobalS.Size.x + "\nCamera Y Axis Size: " + GlobalS.Size.y);
