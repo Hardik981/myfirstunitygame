@@ -14,23 +14,19 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform pChildT; // Take Player Bullet Position
 
     public delegate void PBulT();
-
     public event PBulT Pbt; // it start Player Bullet
-
     public delegate void PBulF();
-
     public event PBulF Pbf; // it stop Player Bullet
 
     private readonly Vector2 touchUp = new Vector2(0, 1);
-    private const int Rotate = 15; //Player Rotation Speed
+    private const int Rotate = 25; //Player Rotation Speed
 
-    private readonly Vector2 up = new Vector2(0, 1.25f);
+    private readonly Vector2 up = new Vector2(0, 0.5f);
     private readonly Vector2 right = new Vector2(1.25f, 0);
 
     private readonly float _dis = Screen.height;
     private bool _upControl; //For Up the Player when pointed to Up Button
     private bool _downControl; //For Down the Player when pointed to Down Button
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>(); //Add RigidBody2d to _rb
@@ -42,12 +38,14 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        pChildT.localPosition = new Vector3(0,0.5f,0);
         StartCoroutine(UpI());
         StartCoroutine(DownI());
     }
 
     private void FixedUpdate()
     {
+        _rb.AddRelativeForce(up);
         MotionF();
     }
 
@@ -55,6 +53,16 @@ public class Player : MonoBehaviour
     {
         CheckHit();
         CountHealth();
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            var transform1 = transform;
+            transform1.eulerAngles = transform1.forward * 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            var transform1 = transform;
+            transform1.eulerAngles = transform1.forward * 180;
+        }
         if (Input.GetKey(KeyCode.P)) //Pause Game
         {
             Time.timeScale = 0;
@@ -87,66 +95,14 @@ public class Player : MonoBehaviour
 
     private void MotionF()
     {
-        var keyA = Input.GetKey(KeyCode.A);
-        var keyD = Input.GetKey(KeyCode.D);
-        var keyW = Input.GetKey(KeyCode.W);
-        var keyS = Input.GetKey(KeyCode.S);
-        if (keyA && keyW)
-        {
+        if(Input.GetKey(KeyCode.A))
             _rb.AddRelativeForce(-right);
-            _rb.AddRelativeForce(up);
-            _sr.sprite = pLeft;
-        }
-        else if (keyA && keyS)
-        {
-            _rb.AddRelativeForce(-right);
-            _rb.AddRelativeForce(-up);
-            _sr.sprite = pLeft;
-        }
-        else if (keyD && keyW)
-        {
+        else if(Input.GetKey(KeyCode.D))
             _rb.AddRelativeForce(right);
-            _rb.AddRelativeForce(up);
-            _sr.sprite = pRight;
-        }
-        else if (keyD && keyS)
-        {
-            _rb.AddRelativeForce(right);
-            _rb.AddRelativeForce(-up);
-            _sr.sprite = pRight;
-        }
-        else if (keyA) //Run code in loop when key is pressed
-        {
-            _rb.AddRelativeForce(-right);
-            _sr.sprite = pLeft;
-        }
-
-        else if (keyD)
-        {
-            _rb.AddRelativeForce(right);
-            _sr.sprite = pRight;
-        }
-
-        else if (keyW)
-        {
-            _rb.AddRelativeForce(up);
-            _sr.sprite = mSprite;
-        }
-
-        else if (keyS)
-        {
-            _rb.AddRelativeForce(-up);
-            _sr.sprite = mSprite;
-        }
-
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
             _rb.AddTorque(Rotate);
-
         else if (Input.GetKey(KeyCode.RightArrow))
             _rb.AddTorque(-Rotate);
-        else
-            _sr.sprite = mSprite;
-        
     }
 
     public void UpF()

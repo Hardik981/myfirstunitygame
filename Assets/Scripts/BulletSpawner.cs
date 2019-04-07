@@ -30,7 +30,6 @@ public class BulletSpawner : MonoBehaviour
                     _pS.Pbt += StartPBul; //Subscribe event for function
                     _pS.Pbf += StopPBul;
                 }
-
                 StartCoroutine(CreateP_Bullets());
                 break;
             }

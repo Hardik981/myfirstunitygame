@@ -75,10 +75,7 @@ public class Functions2D : MonoBehaviour
         if (wantRandomPos)
         {
             var camX = GlobalS.Size.x;
-            
-            randomPos =
-                new Vector3(Random.Range(-(0.5f * camX), 0.5f * camX), 0,
-                    0); //Random Position of enemy to start
+            randomPos = new Vector3(Random.Range(-(0.5f * camX), 0.5f * camX), 0,0); //Random Position of enemy to start
         }
 
         if (list.Count == 0)
@@ -91,8 +88,7 @@ public class Functions2D : MonoBehaviour
             if (wantEnBul)
             {
                 var enemyBulletPos = new GameObject("EnemyBulletPos"); //Create EnemyBullet Pos
-                enemyBulletPos.transform.parent =
-                    go.transform; //only Make Parent not take parent transform properties but it move according to the parent from its own position
+                enemyBulletPos.transform.parent = go.transform; //only Make Parent not take parent transform properties but it move according to the parent from its own position
                 enemyBulletPos.AddComponent<BulletSpawner>(); //Add Script
                 enemyBulletPos.transform.localPosition = wantYEnBulPos ? new Vector3(0, enBulPos, 0) : new Vector3(enBulPos, 0, 0);
             }

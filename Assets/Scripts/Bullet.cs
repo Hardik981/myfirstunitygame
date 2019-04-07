@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    private void BulVelF ()
+    private void BulVelF()
     {
         if (gameObject.name == "Bullet")
             _rb.velocity = transform.up * Up;
