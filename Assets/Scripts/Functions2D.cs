@@ -68,7 +68,7 @@ public class Functions2D : MonoBehaviour
         //In Position Vector2, x = -0.9 means left, x = 0.9 means right, y = 0.9 means top, y = -0.9 means down  
     }
     
-    public static void CreatePool(Queue<GameObject> list, string goName, GameObject initGo, Transform pos,
+    public static void CreatePool(Queue<GameObject> list, string goName, GameObject go, Transform initPos,
         string tagName, float enBulPos, bool wantEnBul, bool wantRandomPos, bool wantYEnBulPos,bool wantTag,bool createBul,ref bool checkNull)
     {
         var randomPos = new Vector3(0, 0, 0);
@@ -80,19 +80,19 @@ public class Functions2D : MonoBehaviour
 
         if (list.Count == 0)
         {
-            var position = pos.position;
-            var rotation = pos.rotation;
-            var go = createBul ? Instantiate(initGo, position, rotation,pos) : Instantiate(initGo, position, rotation);
-            go.gameObject.name = goName;
-            if (wantTag) go.gameObject.tag = tagName;
+            var position = initPos.position;
+            var rotation = initPos.rotation;
+            var goV = createBul ? Instantiate(go, position, rotation,initPos) : Instantiate(go, position, rotation);
+            goV.gameObject.name = goName;
+            if (wantTag) goV.gameObject.tag = tagName;
             if (wantEnBul)
             {
                 var enemyBulletPos = new GameObject("EnemyBulletPos"); //Create EnemyBullet Pos
-                enemyBulletPos.transform.parent = go.transform; //only Make Parent not take parent transform properties but it move according to the parent from its own position
+                enemyBulletPos.transform.parent = goV.transform; //only Make Parent not take parent transform properties but it move according to the parent from its own position
                 enemyBulletPos.AddComponent<BulletSpawner>(); //Add Script
                 enemyBulletPos.transform.localPosition = wantYEnBulPos ? new Vector3(0, enBulPos, 0) : new Vector3(enBulPos, 0, 0);
             }
-            go.transform.position = go.transform.position + randomPos; //Make Enemy Position Random
+            goV.transform.position = goV.transform.position + randomPos; //Make Enemy Position Random
         }
         else //Reuse 
         {
@@ -102,13 +102,13 @@ public class Functions2D : MonoBehaviour
                 if (checkNull)
                 {
                     poll.gameObject.name = goName;
-                    poll.transform.parent = pos;
+                    poll.transform.parent = initPos;
                 }
                 else
                     return;
             }
-            poll.transform.position = pos.position + randomPos;
-            poll.transform.rotation = pos.rotation;
+            poll.transform.position = initPos.position + randomPos;
+            poll.transform.rotation = initPos.rotation;
             poll.SetActive(true);
         }
     }

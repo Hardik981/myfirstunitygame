@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
     private GameObject _pPos;  //Store Player GameObject
     private Transform _pPosT;   //Store Player Transform
     private const int Speed = 10;
+    private const int MissileSpeed = 25;
     private Vector2 _direction;
     public delegate void EBulT();
     public event EBulT Ebt;  // it start Enemy Bullet
@@ -35,6 +36,7 @@ public class Enemy : MonoBehaviour {
         _pPos = GameObject.Find("Player");
         _pPosT = _pPos.transform;
         Functions2D.RelativeTransform(transform,"scale",XSize,YSize);
+        
     }
 
     private void FixedUpdate()
@@ -42,9 +44,11 @@ public class Enemy : MonoBehaviour {
         switch (gameObject.name)
         {
             case "MissileUp":
+                Functions2D.RelativeVelocity(transform, _rb, 'y', -MissileSpeed);
+                break;
             case "MissileDown":
-                Functions2D.FollowOtherInRotate(transform,_pPosT);
-                Functions2D.RelativeVelocity(transform, _rb, 'y', -Speed);
+                //Functions2D.FollowOtherInRotate(transform,_pPosT);
+                Functions2D.RelativeVelocity(transform, _rb, 'y', MissileSpeed);
                 break;
             case "ShipUp":
             case "ShipDown":
@@ -66,6 +70,7 @@ public class Enemy : MonoBehaviour {
     {
         CheckVisible(); //Check Visibility to Camera
     }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         switch (other.gameObject.name)
@@ -121,6 +126,11 @@ public class Enemy : MonoBehaviour {
                 GameObject o;
                 (o = gameObject).SetActive(false);
                 Global.Recycle(o);
+            }
+            else
+            {
+                if (gameObject.name == "MissileUp" || gameObject.name == "MissileDown")
+                    Functions2D.FollowOtherInRotate(transform, _pPosT);
             }
         }
     }

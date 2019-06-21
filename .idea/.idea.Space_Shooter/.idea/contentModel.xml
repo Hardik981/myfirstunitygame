@@ -15,7 +15,7 @@
           <e p="Functions2D.cs" t="Include" />
           <e p="GlobalS.cs" t="Include" />
           <e p="Player.cs" t="Include" />
-          <e p="Scale.cs" t="Include" />
+          <e p="ScaleEnPos.cs" t="Include" />
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Resources" t="Include">

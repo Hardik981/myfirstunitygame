@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Scale : MonoBehaviour
+public class ScaleEnPos : MonoBehaviour
 {
     [SerializeField] private Transform pPos;
     [SerializeField] private Transform enUpPos;
@@ -18,7 +18,7 @@ public class Scale : MonoBehaviour
     private void Update()
     {
         var pos = pPos.position;
-        const float change = 1.25f;
+        const float change = 1.5f;
         var yUpPos = pos.y + (change * yAxis);
         var yDownPos = pos.y - (change * yAxis);
         enUpPos.position = new Vector3(pos.x,yUpPos,0);
